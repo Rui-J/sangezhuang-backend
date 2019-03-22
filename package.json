@@ -1,0 +1,29 @@
+{
+  "name": "koa",
+  "version": "1.0.0",
+  "description": "koa test",
+  "main": "app.js",
+  "scripts": {
+    "init_sql": "node ./init/db.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "koa",
+    "test"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-jwt": "^3.5.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-session": "^5.10.1",
+    "mysql2": "^1.6.4",
+    "sequelize": "^5.1.0",
+    "uuid": "^3.3.2"
+  }
+}
