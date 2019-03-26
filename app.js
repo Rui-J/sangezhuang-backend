@@ -14,9 +14,9 @@ app.use(koaLogger())
 // 配置ctx.body解析中间件
 app.use(bodyParser())
 
-app.use(jsonwebtoken());
-
 app.use(formatBody());
+
+app.use(jsonwebtoken());
 // 初始化路由中间件
 app.use(routers.routes()).use(routers.allowedMethods())
 

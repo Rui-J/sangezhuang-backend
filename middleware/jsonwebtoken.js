@@ -8,14 +8,14 @@ let {
 // Authorization
 async function jsonwebtoken(ctx, next) {
   if (!noAuth.includes(ctx.url)) {
-    let token = ctx.header.Authorization
+    let token = ctx.header.authorization
     if (token) {
       try {
         await jwt.verify(token, privateKey)
         await next()
       } catch (error) {
         ctx.body = {
-          success: 401
+          code: 401
         }
       }
     } else {

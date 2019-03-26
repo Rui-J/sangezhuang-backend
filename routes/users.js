@@ -1,6 +1,8 @@
 const Router = require('koa-router')
 const http = require('http')
 const User = require('../controllers/User')
+const jwt = require('jsonwebtoken')
+const config = require('../config')
 const router = new Router({
   prefix: "users"
 });
@@ -36,7 +38,6 @@ router.post('/getValiCode', async (ctx) => {
     }
   }
 }).post('/signup', async (ctx) => {
-
   // 注册
   let {
     name,
@@ -72,11 +73,21 @@ router.post('/getValiCode', async (ctx) => {
     phone,
     password,
   } = ctx.request.body
+  if (!phone || !password) {
+    ctx.body = {
+      code: 400,
+    }
+    return;
+  }
   let data = await User.find({
     phone,
   })
-  console.log('data', data);
+  //登录成功
   if (data && data.password === password) {
+    let token = jwt.sign({
+      exp: Math.floor(Date.now() / 1000) + (2 * 60 * 60),
+    }, config.privateKey);
+    ctx.set('authorization', token);
     ctx.body = {
       data
     }
@@ -85,6 +96,14 @@ router.post('/getValiCode', async (ctx) => {
       code: 120,
     }
   }
+})
+// 刷新token
+router.get('/refreshRoken', async (ctx) => {
+  let token = jwt.sign({
+    exp: Math.floor(Date.now() / 1000) + (2 * 60 * 60),
+  }, config.privateKey);
+  ctx.set('authorization', token);
+  ctx.body = {}
 })
 
 module.exports = router;
